@@ -57,8 +57,7 @@ function iniElements() {
   i = -1;
   while(++i < N){
     item = game.add.sprite(elementsXPos[i], yPos, sprites[getRandom(sprites.length)])
-    item.pivot.x = spriteDim/2
-    item.pivot.y = spriteDim/2
+    item.pivot = new PIXI.Point(spriteDim/2, spriteDim/2);
     item.scale.setTo(spritesScaleMult, spritesScaleMult);
     item.tint = colors[getRandom(colors.length)]
     elements.push(item)

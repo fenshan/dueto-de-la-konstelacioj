@@ -7,35 +7,54 @@ var playersClass = function(){
     this.shapePos = elements.length - 1
     this.shapeKey = game.input.keyboard.addKey('P');
 
-    this.changeArrowPosEvent
+    this.timeChangeArrowPos = 2 //todo change
+    this.timeLastChange
 };
 
 playersClass.prototype = {
 
     create: function(){
-        this.iniArrows(this.colorArrow, elementsXPos[this.colorPos], game.world.centerY - 80, 180)
-        this.iniArrows(this.shapeArrow, elementsXPos[this.shapePos], game.world.centerY + 80, 0)
+        this.colorArrow = this.iniArrows(elementsXPos[this.colorPos], game.world.centerY - 80, 180)
+        this.shapeArrow = this.iniArrows(elementsXPos[this.shapePos], game.world.centerY + 80, 0)
 
-        //this.changeArrowPosEvent = game.time.addEvent({ delay: 2000, callback: this.onArrowPos, callbackScope: game, loop: true});
-        //this.changeArrowPosEvent = game.time.delayedCall(2000, this.onArrowPos, [], game);
+        this.UpdateTimeLastChange();
 
-
+        //this.changeArrowPosEvent = game.time.events.add(Phaser.Timer.SECOND * this.timeChangeArrowPos, this.onArrowPos, this);
     },
     
     update: function(){
+        currentTime = game.time.totalElapsedSeconds();
+        if (currentTime - this.timeLastChange > this.timeChangeArrowPos)
+        {
+            this.ChangeArrowPos();
+            this.UpdateTimeLastChange();
+        }
+
+
+
+
         
     }, 
 
-    iniArrows: function(arrow, xPos, yPos, angle){
+    iniArrows: function(xPos, yPos, angle){
         arrow = game.add.sprite(xPos, yPos, 'arrow');
-        arrow.pivot.x = spriteDim/2
-        arrow.pivot.y = spriteDim/2
+        arrow.pivot = new PIXI.Point(spriteDim/2, spriteDim/2);
         arrow.scale.setTo(spritesScaleMult/2, spritesScaleMult/2);
         arrow.angle = angle
+        return arrow
     }, 
 
-    onArrowPos: function()
+    ChangeArrowPos: function()
     {
-        shapeArrow.setScale(1); //todo change
+        this.colorPos = (this.colorPos + 1) % elements.length
+        this.shapePos = (this.shapePos - 1 + elements.length) % elements.length
+
+        this.colorArrow.position.x = elementsXPos[this.colorPos]
+        this.shapeArrow.position.x = elementsXPos[this.shapePos]
+    },
+
+    UpdateTimeLastChange: function()
+    {
+        this.timeLastChange = game.time.totalElapsedSeconds();
     }
 }
