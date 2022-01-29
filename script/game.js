@@ -7,10 +7,11 @@ const game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { //todo phaser.auto?
 
 // Declare shared variables at the top so all methods can access them
 let sprites = []
-let elements = []
-let N = 4
 //yellow #EBE97A // orange #EBA66E // red #EB6382 // purple #9957EB // blue #4BD3EB // green #86EB95 //
 var colors = [0xEBE97A, 0xEBA66E, 0xEB6382, 0x9957EB, 0x4BD3EB, 0x86EB95];
+
+let elements = []
+let players
 
 function preload () {
   //bacground  //todo change link
@@ -21,16 +22,19 @@ function preload () {
   game.load.image('shape1', 'assets/sprites/square.png')
   game.load.image('shape2', 'assets/sprites/star.png')
   game.load.image('shape3', 'assets/sprites/triangle.png')
-  //game.load.image('shape4', 'assets/sprites/moon.png')
-  //game.load.image('shape5', 'assets/sprites/.png')
-  sprites = ['shape0', 'shape1', 'shape2', 'shape3']; //, 'shape4', 'shape5']
+  game.load.image('shape4', 'assets/sprites/moon.png')
+  game.load.image('shape5', 'assets/sprites/diamond.png')
+  sprites = ['shape0', 'shape1', 'shape2', 'shape3', 'shape4', 'shape5'];
 }
 
 function create () {
   background = game.add.sprite(0, 0, 'background')
-  background.tint = 0x000000;
+  background.tint = 0x330022;
   
   iniElements()
+
+  //players = new players();
+  //iniElements()
 }
 
 function update () {}
@@ -42,6 +46,7 @@ function iniElements() {
   xPos = [200, 333, 467, 600]
   pivotPos = 80; //160px
   scaleMult = 0.5; //80px
+  N = 4
   
   i = -1;
   while(++i < N){
