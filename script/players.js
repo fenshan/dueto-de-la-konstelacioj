@@ -1,42 +1,41 @@
 var playersClass = function(){
-    this.p1Arrow
-    this.p1Pos = 0
-    this.p1Con = 'q'
+    this.colorArrow
+    this.colorPos = 0
+    this.colorKey = game.input.keyboard.addKey('Q');
 
-    this.p2Arrow
-    this.p2Pos = elements.length - 1    
-    this.p2Con = 'p'
+    this.shapeArrow
+    this.shapePos = elements.length - 1
+    this.shapeKey = game.input.keyboard.addKey('P');
+
+    this.changeArrowPosEvent
 };
 
 playersClass.prototype = {
 
     create: function(){
-        p1Arrow = game.add.sprite(elementsXPos[0],200, 'arrow');
-        p1Arrow.pivot.x = spriteDim/2
-        p1Arrow.pivot.y = spriteDim/2
+        this.iniArrows(this.colorArrow, elementsXPos[this.colorPos], game.world.centerY - 80, 180)
+        this.iniArrows(this.shapeArrow, elementsXPos[this.shapePos], game.world.centerY + 80, 0)
+
+        //this.changeArrowPosEvent = game.time.addEvent({ delay: 2000, callback: this.onArrowPos, callbackScope: game, loop: true});
+        //this.changeArrowPosEvent = game.time.delayedCall(2000, this.onArrowPos, [], game);
 
 
-
-        
-        // this.player.anchor.setTo(0.5,0.5);
-        // game.physics.arcade.enable(this.player);
-        // this.player.body.setSize(25,55,0,0);
-        // this.player.body.collideWorldBounds = true;
-        // this.player.body.gravity.set(0,game.rnd.integerInRange(500,800));
-        // //this.handleBounce(2);
-        
-        // this.jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        // this.cursor = game.input.keyboard.createCursorKeys();
-        
-        // this.yOrig = this.player.y;
-        // this.yChange = 0;
-        // this.cameraYMin = 99999;
     },
     
     update: function(){
-        // game.world.setBounds(0,-this.yChange,game.world.width,game.height+this.yChange);
-        // this.cameraYMin = Math.min(this.cameraYMin,this.player.y-game.height+300);
-        // //game.camera.y -= 1;
-        // game.camera.y = this.cameraYMin;
+        
+    }, 
+
+    iniArrows: function(arrow, xPos, yPos, angle){
+        arrow = game.add.sprite(xPos, yPos, 'arrow');
+        arrow.pivot.x = spriteDim/2
+        arrow.pivot.y = spriteDim/2
+        arrow.scale.setTo(spritesScaleMult/2, spritesScaleMult/2);
+        arrow.angle = angle
+    }, 
+
+    onArrowPos: function()
+    {
+        shapeArrow.setScale(1); //todo change
     }
 }

@@ -1,19 +1,20 @@
 // Initialize the Phaser Game object and set default game window size
-const game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { //todo phaser.auto?
+var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { //todo phaser.auto?
   preload: preload,
   create: create,
   update: update
 })
 
 // Declare shared variables at the top so all methods can access them
-let sprites = []
-let spriteDim = 160
+sprites = []
+spriteDim = 160
 //yellow #EBE97A // orange #EBA66E // red #EB6382 // purple #9957EB // blue #4BD3EB // green #86EB95 //
-let colors = [0xEBE97A, 0xEBA66E, 0xEB6382, 0x9957EB, 0x4BD3EB, 0x86EB95];
+colors = [0xEBE97A, 0xEBA66E, 0xEB6382, 0x9957EB, 0x4BD3EB, 0x86EB95];
 
 N = 4
-let elements = []
-let elementsXPos = [200, 333, 467, 600]
+elements = []
+elementsXPos = [200, 333, 467, 600]
+spritesScaleMult = 0.5; 
 let players
 
 function preload () {
@@ -52,14 +53,13 @@ function update () {
 //ini elements in the table
 function iniElements() {
   yPos = game.world.centerY
-  scaleMult = 0.5; //80px
     
   i = -1;
   while(++i < N){
     item = game.add.sprite(elementsXPos[i], yPos, sprites[getRandom(sprites.length)])
     item.pivot.x = spriteDim/2
     item.pivot.y = spriteDim/2
-    item.scale.setTo(scaleMult, scaleMult);
+    item.scale.setTo(spritesScaleMult, spritesScaleMult);
     item.tint = colors[getRandom(colors.length)]
     elements.push(item)
   }
