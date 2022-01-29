@@ -17,12 +17,12 @@ function preload () {
   game.load.image('background', 'https://phaser.io/content/tutorials/making-your-first-phaser-3-game/part3.png')
   
   //elements  //todo change links
-  game.load.image('shape0', 'https://raw.githubusercontent.com/fenshan/ggj22/main/assets/sprites/circle.png')
-  game.load.image('shape1', 'https://raw.githubusercontent.com/fenshan/ggj22/main/assets/sprites/square.png')
-  game.load.image('shape2', 'https://raw.githubusercontent.com/fenshan/ggj22/main/assets/sprites/star.png')
-  game.load.image('shape3', 'https://raw.githubusercontent.com/fenshan/ggj22/main/assets/sprites/triangle.png')
-  game.load.image('shape4', 'https://raw.githubusercontent.com/fenshan/ggj22/main/assets/sprites/moon.png')
-  game.load.image('shape5', 'https://raw.githubusercontent.com/fenshan/ggj22/main/assets/sprites/.png')
+  game.load.image('shape0', 'assets/sprites/circle.png')
+  game.load.image('shape1', 'assets/sprites/square.png')
+  game.load.image('shape2', 'assets/sprites/star.png')
+  game.load.image('shape3', 'assets/sprites/triangle.png')
+  //game.load.image('shape4', 'assets/sprites/moon.png')
+  //game.load.image('shape5', 'assets/sprites/.png')
   sprites = ['shape0', 'shape1', 'shape2', 'shape3']; //, 'shape4', 'shape5']
 }
 
