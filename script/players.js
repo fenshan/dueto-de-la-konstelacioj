@@ -1,16 +1,23 @@
-var players = function(){
-    //this.p1Pos = 0;
-    //this.p2Pos = elements.length - 1;
-    //this.p1Con = 'q'
-    //this.p2Con = 'p'
+var playersClass = function(){
+    this.p1Arrow
+    this.p1Pos = 0
+    this.p1Con = 'q'
+
+    this.p2Arrow
+    this.p2Pos = elements.length - 1    
+    this.p2Con = 'p'
 };
 
-players.prototype = {
-        
-    create: function(){
-        //game.add.sprite(0, 0, sprites[0])
+playersClass.prototype = {
 
-        // this.player = game.add.sprite(game.world.centerX,game.world.centerY,'jolly',1);
+    create: function(){
+        p1Arrow = game.add.sprite(elementsXPos[0],200, 'arrow');
+        p1Arrow.pivot.x = spriteDim/2
+        p1Arrow.pivot.y = spriteDim/2
+
+
+
+        
         // this.player.anchor.setTo(0.5,0.5);
         // game.physics.arcade.enable(this.player);
         // this.player.body.setSize(25,55,0,0);
