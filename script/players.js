@@ -7,7 +7,9 @@ var playersClass = function(){
     this.shapePos = N - 1
     this.shapeKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
 
-    this.timeChangeArrowPos = 2 //todo adjust time
+    //timer to change the position of the arrows
+    this.timetoChange = 2 //todo adjust time. quizás es guay que sea un número random entre unos parámetros?
+    //para que se desajusten los tiempos de ambos jugadores
     this.timeLastChange
 };
 
@@ -25,9 +27,8 @@ playersClass.prototype = {
     },
     
     update: function(){
-        //timer to change the position of the arrows
         currentTime = game.time.totalElapsedSeconds();
-        if (currentTime - this.timeLastChange > this.timeChangeArrowPos)
+        if (currentTime - this.timeLastChange > this.timetoChange)
         {
             this.ChangeArrowPos();
             this.UpdateTimeLastChange();

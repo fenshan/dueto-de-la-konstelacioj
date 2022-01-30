@@ -18,6 +18,7 @@ elementIColors = []
 elementsXPos = [200, 333, 467, 600]
 spritesScaleMult = 0.5; 
 let players
+let recipe
 
 function preload () {
   //bacground  //todo change link
@@ -35,6 +36,13 @@ function preload () {
   //other sprites
   game.load.image('arrow', 'assets/sprites/arrow_player.png')
   game.load.image('stain', 'assets/sprites/paint_stain.png')
+  game.load.image('p_no', 'assets/sprites/P_key_nonpressed.png')
+  game.load.image('p_yes', 'assets/sprites/P_keyword_pressed.png')
+  game.load.image('q_no', 'assets/sprites/Q_key_nonpressed.png')
+  game.load.image('q_yes', 'assets/sprites/Q_keyword_pressed.png')
+  game.load.image('clock', 'assets/sprites/time_bar_clock.png')
+  game.load.image('time_fill', 'assets/sprites/time_bar_base.png')
+  game.load.image('time_frame', 'assets/sprites/time_bar_frame.png')
 }
 
 function create () {
@@ -46,16 +54,18 @@ function create () {
 
   players = new playersClass();
   players.create();
+
+  recipe = new recipeClass();
+  recipe.create();
 }
 
 function update () {
   players.update();
+  recipe.update();
 }
 
 //ini elements in the table
 function iniElements() {
-  yPos = game.world.centerY
-    
   i = -1;
   while(++i < N){
     elementIShapes.push(getRandom(sprites.length))
@@ -64,7 +74,9 @@ function iniElements() {
   }
 }
 
+//ini a sprite of the table
 function iniSprite(i) {
+  yPos = game.world.centerY
   shape = elementIShapes[i]
   color = elementIColors[i]
 
