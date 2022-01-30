@@ -2,15 +2,16 @@ var winloseClass = function(){
     this.points
     this.pointsText
     this.time_bar
-    this.timetoLose = 60.0 //todo adjust this time 30.0
+    this.timetoLose = 30.0 //todo adjust this time 30.0
     this.timeStartRecipe
 };
 
 winloseClass.prototype = {
 
     create: function(){
-        this.time_bar = game.add.sprite(32, 10, 'time_fill')
-        game.add.sprite(10, 10, 'time_frame')        
+        //game.add.sprite(10, 10, 'time_frame')
+        this.time_bar = game.add.sprite(20, 10, 'time_fill')
+        game.add.sprite(10, 10, 'time_frame')
         this.UpdateTimeStartRecipe()
         this.points = 0
         this.UpdatePointsUI();

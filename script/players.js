@@ -1,5 +1,6 @@
 var playersClass = function(){
     this.timeTap = 0.15
+    this.doubleSpeed
     
     this.colorArrow
     this.colorPos = 0
@@ -40,6 +41,8 @@ playersClass.prototype = {
         this.shapeKey.onDown.add(this.shapeKeyPressed, this)
         this.colorKey.onUp.add(this.colorKeyUp, this)
         this.shapeKey.onUp.add(this.shapeKeyUp, this)
+
+        this.doubleSpeed = false
     },
     
     update: function(){
@@ -62,6 +65,7 @@ playersClass.prototype = {
         //hold down keys
         if (this.colorKey.isDown && this.shapeKey.isDown) //todo que ninguno de los dos sea tap
         {
+            this.doubleSpeed = true
 
         }
     }, 
@@ -85,25 +89,12 @@ playersClass.prototype = {
         this.shapeKeySprite.tint = 0x999999;
     },
 
-    colorKeyHold: function(){
-
-        console.log("color")
-    },
-
-    shapeKeyHold: function(){
-        console.log("shape")
-    },
-
     colorKeyUp: function(){
         currentTime = game.time.totalElapsedSeconds();
         //tap
         if (currentTime - this.colorPressedTime < this.timeTap)
             changeColor(this.colorPos)
-        //hold
-        else
-        {
-
-        }
+        this.doubleSpeed = false
 
         //key up animation
         this.colorKeySprite.loadTexture('q_no')
@@ -115,11 +106,7 @@ playersClass.prototype = {
         //tap
         if (currentTime - this.shapePressedTime < this.timeTap)
             changeShape(this.shapePos)
-        //hold
-        else
-        {
-
-        }
+        this.doubleSpeed = false
 
         //key up animation
         this.shapeKeySprite.loadTexture('p_no')
