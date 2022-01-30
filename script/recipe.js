@@ -10,7 +10,7 @@ var recipeClass = function(){
     this.time_bar
 
     //timer to change the position of the ingredients of the recipe
-    this.timetoChange = 4 //todo adjust time. quizás es guay que sea un número random entre unos parámetros?
+    this.timetoChange = 2 //todo adjust time. quizás es guay que sea un número random entre unos parámetros?
     this.timeLastChange
 };
 
