@@ -1,13 +1,13 @@
 var playersClass = function(){
     this.colorArrow
     this.colorPos = 0
-    this.colorKey = game.input.keyboard.addKey('Q');
+    this.colorKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
 
     this.shapeArrow
-    this.shapePos = elements.length - 1
-    this.shapeKey = game.input.keyboard.addKey('P');
+    this.shapePos = N - 1
+    this.shapeKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
 
-    this.timeChangeArrowPos = 2 //todo change
+    this.timeChangeArrowPos = 2 //todo adjust time
     this.timeLastChange
 };
 
@@ -19,22 +19,28 @@ playersClass.prototype = {
 
         this.UpdateTimeLastChange();
 
-        //this.changeArrowPosEvent = game.time.events.add(Phaser.Timer.SECOND * this.timeChangeArrowPos, this.onArrowPos, this);
+        this.colorKey.onDown.add(this.colorKeyPressed, this)
+        this.shapeKey.onDown.add(this.shapeKeyPressed, this)
+
     },
     
     update: function(){
+        //timer to change the position of the arrows
         currentTime = game.time.totalElapsedSeconds();
         if (currentTime - this.timeLastChange > this.timeChangeArrowPos)
         {
             this.ChangeArrowPos();
             this.UpdateTimeLastChange();
         }
-
-
-
-
-        
     }, 
+
+    colorKeyPressed: function(){
+        changeColor(this.colorPos)
+    },
+
+    shapeKeyPressed: function(){
+        changeShape(this.shapePos)
+    },
 
     iniArrows: function(xPos, yPos, angle){
         arrow = game.add.sprite(xPos, yPos, 'arrow');
@@ -46,8 +52,8 @@ playersClass.prototype = {
 
     ChangeArrowPos: function()
     {
-        this.colorPos = (this.colorPos + 1) % elements.length
-        this.shapePos = (this.shapePos - 1 + elements.length) % elements.length
+        this.colorPos = (this.colorPos + 1) % N
+        this.shapePos = (this.shapePos - 1 + N) % N
 
         this.colorArrow.position.x = elementsXPos[this.colorPos]
         this.shapeArrow.position.x = elementsXPos[this.shapePos]

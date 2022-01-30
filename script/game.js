@@ -12,7 +12,9 @@ spriteDim = 160
 colors = [0xEBE97A, 0xEBA66E, 0xEB6382, 0x9957EB, 0x4BD3EB, 0x86EB95];
 
 N = 4
-elements = []
+elementSprites = []
+elementIShapes = []
+elementIColors = []
 elementsXPos = [200, 333, 467, 600]
 spritesScaleMult = 0.5; 
 let players
@@ -56,15 +58,41 @@ function iniElements() {
     
   i = -1;
   while(++i < N){
-    item = game.add.sprite(elementsXPos[i], yPos, sprites[getRandom(sprites.length)])
-    item.pivot = new PIXI.Point(spriteDim/2, spriteDim/2);
-    item.scale.setTo(spritesScaleMult, spritesScaleMult);
-    item.tint = colors[getRandom(colors.length)]
-    elements.push(item)
+    elementIShapes.push(getRandom(sprites.length))
+    elementIColors.push(getRandom(colors.length))
+    elementSprites.push(iniSprite(i))
   }
+}
+
+function iniSprite(i) {
+  shape = elementIShapes[i]
+  color = elementIColors[i]
+
+  item = game.add.sprite(elementsXPos[i], yPos, sprites[shape])
+  item.pivot = new PIXI.Point(spriteDim/2, spriteDim/2);
+  item.scale.setTo(spritesScaleMult, spritesScaleMult);
+  item.tint = colors[color]
+
+  return item
 }
 
 function getRandom(n) {
   return Math.floor(Math.random() * n);
+}
+
+//change element shape
+function changeShape(i)
+{
+  elementIShapes[i] = (elementIShapes[i] + 1) % sprites.length
+  elementSprites[i].destroy()
+  elementSprites[i] = iniSprite(i)
+}
+
+//change element color
+function changeColor(i)
+{
+  elementIColors[i] = (elementIColors[i] + 1) % colors.length
+  elementSprites[i].destroy()
+  elementSprites[i] = iniSprite(i)
 }
 
