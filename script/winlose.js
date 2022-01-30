@@ -2,7 +2,7 @@ var winloseClass = function(){
     this.points
     this.pointsText
     this.time_bar
-    this.timetoLose = 30.0 //todo adjust this time 30.0
+    this.timetoLose = 60.0 //todo adjust this time 30.0
     this.timeStartRecipe
 };
 
@@ -47,12 +47,13 @@ winloseClass.prototype = {
                     return false;
                 }
             }
-        }        
+        }
         
         this.points += 13
         this.UpdatePointsUI();
 
-        //todo cambiar receta
+        //change recipe and restart timer
+        recipe.restartRecipe()
         this.UpdateTimeStartRecipe()
 
         return;

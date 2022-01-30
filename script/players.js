@@ -1,13 +1,17 @@
 var playersClass = function(){
+    this.timeTap = 0.15
+    
     this.colorArrow
     this.colorPos = 0
     this.colorKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
     this.colorKeySprite
+    this.colorPressedTime
 
     this.shapeArrow
     this.shapePos = N - 1
     this.shapeKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
     this.shapeKeySprite
+    this.shapePressedTime
 
     this.arrowMargin = 80
     this.keyMargin = 60
@@ -54,6 +58,12 @@ playersClass.prototype = {
             this.timetoChangeShape = this.getRandomTimeToChange()
             //console.log(this.timetoChangeShape)
         }
+
+        //hold down keys
+        if (this.colorKey.isDown && this.shapeKey.isDown) //todo que ninguno de los dos sea tap
+        {
+
+        }
     }, 
 
     getRandomTimeToChange: function(){
@@ -62,26 +72,55 @@ playersClass.prototype = {
     },
 
     colorKeyPressed: function(){
-        changeColor(this.colorPos)
+        this.colorPressedTime = game.time.totalElapsedSeconds(); 
         //key pressed animation
         this.colorKeySprite.loadTexture('q_yes')
         this.colorKeySprite.tint = 0x999999;
     },
 
     shapeKeyPressed: function(){
-        changeShape(this.shapePos)
+        this.shapePressedTime = game.time.totalElapsedSeconds();
         //key pressed animation
         this.shapeKeySprite.loadTexture('p_yes')
         this.shapeKeySprite.tint = 0x999999;
     },
 
+    colorKeyHold: function(){
+
+        console.log("color")
+    },
+
+    shapeKeyHold: function(){
+        console.log("shape")
+    },
+
     colorKeyUp: function(){
+        currentTime = game.time.totalElapsedSeconds();
+        //tap
+        if (currentTime - this.colorPressedTime < this.timeTap)
+            changeColor(this.colorPos)
+        //hold
+        else
+        {
+
+        }
+
         //key up animation
         this.colorKeySprite.loadTexture('q_no')
         this.colorKeySprite.tint = 0xffffff;
     },
 
     shapeKeyUp: function(){
+        currentTime = game.time.totalElapsedSeconds();
+        //tap
+        if (currentTime - this.shapePressedTime < this.timeTap)
+            changeShape(this.shapePos)
+        //hold
+        else
+        {
+
+        }
+
         //key up animation
         this.shapeKeySprite.loadTexture('p_no')
         this.shapeKeySprite.tint = 0xffffff;

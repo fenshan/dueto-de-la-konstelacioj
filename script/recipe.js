@@ -38,6 +38,17 @@ recipeClass.prototype = {
         this.elementSprites.push(this.iniSprite(i))
         }
     },
+
+    restartRecipe: function()
+    {
+        for (let i = 0; i < this.elementSprites.length; i++) {
+            this.elementSprites[i].destroy()
+        }
+        this.elementSprites = []
+        this.elementIShapes = []
+        this.elementIColors = []
+        this.iniRecipe()
+    },
     
     //ini one element of the recipe
     iniSprite: function(i) {
