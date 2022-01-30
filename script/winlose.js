@@ -9,7 +9,6 @@ var winloseClass = function(){
 winloseClass.prototype = {
 
     create: function(){
-        //game.add.sprite(10, 10, 'time_frame')
         this.time_bar = game.add.sprite(20, 10, 'time_fill')
         game.add.sprite(10, 10, 'time_frame')
         this.UpdateTimeStartRecipe()

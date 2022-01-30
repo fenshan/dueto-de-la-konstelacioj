@@ -1,6 +1,7 @@
 var playersClass = function(){
     this.timeTap = 0.15
     this.doubleSpeed
+    this.multSpeed = 5
     
     this.colorArrow
     this.colorPos = 0
@@ -27,8 +28,8 @@ var playersClass = function(){
 playersClass.prototype = {
 
     create: function(){
-        this.colorArrow = this.iniArrows(elementsXPos[this.colorPos], elementsYPos - this.arrowMargin, 180)
-        this.shapeArrow = this.iniArrows(elementsXPos[this.shapePos], elementsYPos + this.arrowMargin, 0)
+        this.colorArrow = this.iniArrows(elementsXPos[this.colorPos], elementsYPos - this.arrowMargin, 180, 'arrowColor')
+        this.shapeArrow = this.iniArrows(elementsXPos[this.shapePos], elementsYPos + this.arrowMargin, 0, 'arrowShape')
         this.colorKeySprite = this.iniKeySprites(this.colorArrow.position.x, this.colorArrow.position.y - this.keyMargin, 'q_no')
         this.shapeKeySprite = this.iniKeySprites(this.shapeArrow.position.x, this.shapeArrow.position.y + this.keyMargin, 'p_no')
 
@@ -46,15 +47,14 @@ playersClass.prototype = {
     },
     
     update: function(){
-        currentTime = game.time.totalElapsedSeconds();
-        if (currentTime - this.timeLastChangeColor > this.timetoChangeColor)
+        if (this.modTimePassed(this.timeLastChangeColor) > this.timetoChangeColor)
         {
             this.ChangeColorArrowPos();
             this.timeLastChangeColor = game.time.totalElapsedSeconds();
             this.timetoChangeColor = this.getRandomTimeToChange()
             //console.log(this.timetoChangeColor)
         }
-        if (currentTime - this.timeLastChangeShape > this.timetoChangeShape)
+        if (this.modTimePassed(this.timeLastChangeShape) > this.timetoChangeShape)
         {
             this.ChangeShapeArrowPos();
             this.timeLastChangeShape = game.time.totalElapsedSeconds();
@@ -63,10 +63,12 @@ playersClass.prototype = {
         }
 
         //hold down keys
-        if (this.colorKey.isDown && this.shapeKey.isDown) //todo que ninguno de los dos sea tap
+        if (this.colorKey.isDown && this.shapeKey.isDown 
+            && this.realTimePassed(this.colorPressedTime) >= this.timeTap
+            && this.realTimePassed(this.shapePressedTime) >= this.timeTap)
         {
             this.doubleSpeed = true
-
+            //console.log("double")
         }
     }, 
 
@@ -90,9 +92,8 @@ playersClass.prototype = {
     },
 
     colorKeyUp: function(){
-        currentTime = game.time.totalElapsedSeconds();
         //tap
-        if (currentTime - this.colorPressedTime < this.timeTap)
+        if (this.realTimePassed(this.colorPressedTime) < this.timeTap)
             changeColor(this.colorPos)
         this.doubleSpeed = false
 
@@ -102,9 +103,8 @@ playersClass.prototype = {
     },
 
     shapeKeyUp: function(){
-        currentTime = game.time.totalElapsedSeconds();
         //tap
-        if (currentTime - this.shapePressedTime < this.timeTap)
+        if (this.realTimePassed(this.shapePressedTime) < this.timeTap)
             changeShape(this.shapePos)
         this.doubleSpeed = false
 
@@ -113,8 +113,20 @@ playersClass.prototype = {
         this.shapeKeySprite.tint = 0xffffff;
     },
 
-    iniArrows: function(xPos, yPos, angle){
-        arrow = game.add.sprite(xPos, yPos, 'arrow');
+    realTimePassed: function (time)
+    {
+        return game.time.totalElapsedSeconds() - time;
+    },
+
+    modTimePassed: function (time)
+    {
+        if (this.doubleSpeed)
+            return (game.time.totalElapsedSeconds() - time) * this.multSpeed;
+        return game.time.totalElapsedSeconds() - time;
+    },
+
+    iniArrows: function(xPos, yPos, angle, sp){
+        arrow = game.add.sprite(xPos, yPos, sp);
         arrow.pivot = new PIXI.Point(spriteDim/2, spriteDim/2);
         arrow.scale.setTo(spritesScaleMult/2, spritesScaleMult/2);
         arrow.angle = angle

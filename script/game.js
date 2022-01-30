@@ -37,6 +37,8 @@ function preload () {
 
   //other sprites
   game.load.image('arrow', 'assets/sprites/arrow_player.png')
+  game.load.image('arrowColor', 'assets/sprites/arrow_player_multicolor.png')
+  game.load.image('arrowShape', 'assets/sprites/arrow_player_shapes.png')
   game.load.image('stain', 'assets/sprites/paint_stain.png')
   game.load.image('p_no', 'assets/sprites/P_key_nonpressed.png')
   game.load.image('p_yes', 'assets/sprites/P_keyword_pressed.png')
