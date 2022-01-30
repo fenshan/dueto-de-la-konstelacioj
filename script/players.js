@@ -8,9 +8,10 @@ var playersClass = function(){
     this.shapeKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
 
     //timer to change the position of the arrows
-    this.timetoChange = 2 //todo adjust time. quizás es guay que sea un número random entre unos parámetros?
-    //para que se desajusten los tiempos de ambos jugadores
-    this.timeLastChange
+    this.timetoChangeColor
+    this.timeLastChangeColor
+    this.timetoChangeShape
+    this.timeLastChangeShape
 };
 
 playersClass.prototype = {
@@ -19,7 +20,12 @@ playersClass.prototype = {
         this.colorArrow = this.iniArrows(elementsXPos[this.colorPos], game.world.centerY - 80, 180)
         this.shapeArrow = this.iniArrows(elementsXPos[this.shapePos], game.world.centerY + 80, 0)
 
-        this.UpdateTimeLastChange();
+        this.timeLastChangeColor = game.time.totalElapsedSeconds();
+        this.timeLastChangeShape = game.time.totalElapsedSeconds();
+        this.timetoChangeColor = this.getRandomTimeToChange()
+        console.log(this.timetoChangeColor)
+        this.timetoChangeShape = this.getRandomTimeToChange()
+        console.log(this.timetoChangeShape)
 
         this.colorKey.onDown.add(this.colorKeyPressed, this)
         this.shapeKey.onDown.add(this.shapeKeyPressed, this)
@@ -28,12 +34,26 @@ playersClass.prototype = {
     
     update: function(){
         currentTime = game.time.totalElapsedSeconds();
-        if (currentTime - this.timeLastChange > this.timetoChange)
+        if (currentTime - this.timeLastChangeColor > this.timetoChangeColor)
         {
-            this.ChangeArrowPos();
-            this.UpdateTimeLastChange();
+            this.ChangeColorArrowPos();
+            this.timeLastChangeColor = game.time.totalElapsedSeconds();
+            this.timetoChangeColor = this.getRandomTimeToChange()
+            console.log(this.timetoChangeColor)
+        }
+        if (currentTime - this.timeLastChangeShape > this.timetoChangeShape)
+        {
+            this.ChangeShapeArrowPos();
+            this.timeLastChangeShape = game.time.totalElapsedSeconds();
+            this.timetoChangeShape = this.getRandomTimeToChange()
+            console.log(this.timetoChangeShape)
         }
     }, 
+
+    getRandomTimeToChange: function(){
+        //between 1.0 and 3.0
+        return (getRandom(201) + 100) * 1.0/100
+    },
 
     colorKeyPressed: function(){
         changeColor(this.colorPos)
@@ -51,17 +71,15 @@ playersClass.prototype = {
         return arrow
     }, 
 
-    ChangeArrowPos: function()
+    ChangeColorArrowPos: function()
     {
         this.colorPos = (this.colorPos + 1) % N
-        this.shapePos = (this.shapePos - 1 + N) % N
-
         this.colorArrow.position.x = elementsXPos[this.colorPos]
-        this.shapeArrow.position.x = elementsXPos[this.shapePos]
     },
 
-    UpdateTimeLastChange: function()
+    ChangeShapeArrowPos: function()
     {
-        this.timeLastChange = game.time.totalElapsedSeconds();
+        this.shapePos = (this.shapePos - 1 + N) % N
+        this.shapeArrow.position.x = elementsXPos[this.shapePos]
     }
 }

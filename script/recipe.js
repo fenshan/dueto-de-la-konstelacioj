@@ -1,13 +1,11 @@
 var recipeClass = function(){
-    this.elementsXPos = [95, 171, 248, 325] //todo change
-    this.yPos = 67 //todo change
+    this.elementsXPos = [95, 171, 248, 325]
+    this.yPos = 67
     this.spritesScaleMult = 0.25; 
 
     this.elementSprites = []
     this.elementIShapes = []
     this.elementIColors = []
-
-    this.time_bar
 
     //timer to change the position of the ingredients of the recipe
     this.timetoChange = 2 //todo adjust time. quizás es guay que sea un número random entre unos parámetros?
@@ -17,19 +15,18 @@ var recipeClass = function(){
 recipeClass.prototype = {
 
     create: function(){
-        game.add.sprite(10, 10, 'time_frame')
-        this.time_bar = game.add.sprite(10, 10, 'time_fill')
         this.iniRecipe()
         this.UpdateTimeLastChange();
     },
     
     update: function(){
+        //change ingredient order
         currentTime = game.time.totalElapsedSeconds();
         if (currentTime - this.timeLastChange > this.timetoChange)
         {
             this.ChangeIngredientPos();
             this.UpdateTimeLastChange();
-        }
+        }        
     },
 
     //ini elements in the RECIPE

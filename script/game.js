@@ -19,9 +19,10 @@ elementsXPos = [200, 333, 467, 600]
 spritesScaleMult = 0.5; 
 let players
 let recipe
+let winlose
 
 function preload () {
-  //bacground  //todo change link
+  //bacground
   game.load.image('background', 'assets/sprites/background.png')
   
   //elements 
@@ -55,13 +56,25 @@ function create () {
   players = new playersClass();
   players.create();
 
+  winlose = new winloseClass();
+  winlose.create();
+
   recipe = new recipeClass();
   recipe.create();
 }
 
 function update () {
   players.update();
+  winlose.update();
   recipe.update();
+}
+
+function loseGame(){
+  game.state.restart()
+  //todo fallo elementos mesa
+  //se puede hacer con escenas????
+  //borrar todo, parar timers y poner puntiación
+  //reiniciar todo con un click
 }
 
 //ini elements in the table
@@ -98,6 +111,7 @@ function changeShape(i)
   elementIShapes[i] = (elementIShapes[i] + 1) % sprites.length
   elementSprites[i].destroy()
   elementSprites[i] = iniSprite(i)
+  tryWin()
 }
 
 //change element color
@@ -106,5 +120,12 @@ function changeColor(i)
   elementIColors[i] = (elementIColors[i] + 1) % colors.length
   elementSprites[i].destroy()
   elementSprites[i] = iniSprite(i)
+  tryWin()
+}
+
+function tryWin()
+{
+  winlose.isWin(recipe.elementIColors, recipe.elementIShapes, elementIColors, elementIShapes)
+  //todo if win, freezee the screen for 1s
 }
 
