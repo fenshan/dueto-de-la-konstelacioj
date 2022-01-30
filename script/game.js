@@ -21,6 +21,7 @@ spritesScaleMult = 0.5;
 let players
 let recipe
 let winlose
+let backgroundMusic
 
 function preload () {
   //bacground
@@ -47,9 +48,17 @@ function preload () {
   game.load.image('clock', 'assets/sprites/time_bar_clock.png')
   game.load.image('time_fill', 'assets/sprites/time_bar_base.png')
   game.load.image('time_frame', 'assets/sprites/time_bar_frame.png')
+
+  //soundtrack :D
+  game.load.audio('soundtrack', 'assets/music_fx/it_could_be_light.mp3');
+  //[ 'assets/music_fx/it_could_be_light.mp3', 'assets/music_fx/it_could_be_light.ogg' ]
 }
 
 function create () {
+  backgroundMusic = game.add.audio('soundtrack');
+  backgroundMusic.loop = true;
+  backgroundMusic.play();
+
   background = game.add.sprite(0, 0, 'background')
   background.tint = 0x330022;
   elementsYPos = game.world.centerY + 50
