@@ -52,8 +52,10 @@ function create () {
   background.tint = 0x330022;
   elementsYPos = game.world.centerY + 50
   
+  elementSprites = []
+  elementIShapes = []
+  elementIColors = []
   iniElements()
-  //console.log("te odio")
 
   players = new playersClass();
   players.create();
@@ -72,10 +74,8 @@ function update () {
 }
 
 function loseGame(){
-  game.state.restart()
-  //todo fallo elementos mesa
-  //se puede hacer con escenas????
-  //borrar todo, parar timers y poner puntiación
+  this.game.state.restart(true, true);
+  //todo borrar todo, parar timers y poner puntiación
   //reiniciar todo con un click
 }
 
