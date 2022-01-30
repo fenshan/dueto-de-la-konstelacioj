@@ -1,4 +1,4 @@
-<h1 align="center">☆ dueto de la konstelacioj ☆</h1>
+<h1 align="center">☆ Dueto de la Konstelacioj ☆</h1>
 <h3 align="center">GGJ 2022 game made with JavaScript & Phaser. A game about making constellations with your homies.</h3>
 <br>
 
