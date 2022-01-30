@@ -16,6 +16,7 @@ elementSprites = []
 elementIShapes = []
 elementIColors = []
 elementsXPos = [200, 333, 467, 600]
+let elementsYPos
 spritesScaleMult = 0.5; 
 let players
 let recipe
@@ -49,6 +50,7 @@ function preload () {
 function create () {
   background = game.add.sprite(0, 0, 'background')
   background.tint = 0x330022;
+  elementsYPos = game.world.centerY + 50
   
   iniElements()
   //console.log("te odio")
@@ -89,11 +91,10 @@ function iniElements() {
 
 //ini a sprite of the table
 function iniSprite(i) {
-  yPos = game.world.centerY
   shape = elementIShapes[i]
   color = elementIColors[i]
 
-  item = game.add.sprite(elementsXPos[i], yPos, sprites[shape])
+  item = game.add.sprite(elementsXPos[i], elementsYPos, sprites[shape])
   item.pivot = new PIXI.Point(spriteDim/2, spriteDim/2);
   item.scale.setTo(spritesScaleMult, spritesScaleMult);
   item.tint = colors[color]

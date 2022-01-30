@@ -2,10 +2,15 @@ var playersClass = function(){
     this.colorArrow
     this.colorPos = 0
     this.colorKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
+    this.colorKeySprite
 
     this.shapeArrow
     this.shapePos = N - 1
     this.shapeKey = game.input.keyboard.addKey(Phaser.Keyboard.P);
+    this.shapeKeySprite
+
+    this.arrowMargin = 80
+    this.keyMargin = 60
 
     //timer to change the position of the arrows
     this.timetoChangeColor
@@ -17,19 +22,20 @@ var playersClass = function(){
 playersClass.prototype = {
 
     create: function(){
-        this.colorArrow = this.iniArrows(elementsXPos[this.colorPos], game.world.centerY - 80, 180)
-        this.shapeArrow = this.iniArrows(elementsXPos[this.shapePos], game.world.centerY + 80, 0)
+        this.colorArrow = this.iniArrows(elementsXPos[this.colorPos], elementsYPos - this.arrowMargin, 180)
+        this.shapeArrow = this.iniArrows(elementsXPos[this.shapePos], elementsYPos + this.arrowMargin, 0)
+        this.colorKeySprite = this.iniKeySprites(this.colorArrow.position.x, this.colorArrow.position.y - this.keyMargin, 'q_no')
+        this.shapeKeySprite = this.iniKeySprites(this.shapeArrow.position.x, this.shapeArrow.position.y + this.keyMargin, 'p_no')
 
         this.timeLastChangeColor = game.time.totalElapsedSeconds();
         this.timeLastChangeShape = game.time.totalElapsedSeconds();
         this.timetoChangeColor = this.getRandomTimeToChange()
-        console.log(this.timetoChangeColor)
         this.timetoChangeShape = this.getRandomTimeToChange()
-        console.log(this.timetoChangeShape)
 
         this.colorKey.onDown.add(this.colorKeyPressed, this)
         this.shapeKey.onDown.add(this.shapeKeyPressed, this)
-
+        this.colorKey.onUp.add(this.colorKeyUp, this)
+        this.shapeKey.onUp.add(this.shapeKeyUp, this)
     },
     
     update: function(){
@@ -39,14 +45,14 @@ playersClass.prototype = {
             this.ChangeColorArrowPos();
             this.timeLastChangeColor = game.time.totalElapsedSeconds();
             this.timetoChangeColor = this.getRandomTimeToChange()
-            console.log(this.timetoChangeColor)
+            //console.log(this.timetoChangeColor)
         }
         if (currentTime - this.timeLastChangeShape > this.timetoChangeShape)
         {
             this.ChangeShapeArrowPos();
             this.timeLastChangeShape = game.time.totalElapsedSeconds();
             this.timetoChangeShape = this.getRandomTimeToChange()
-            console.log(this.timetoChangeShape)
+            //console.log(this.timetoChangeShape)
         }
     }, 
 
@@ -57,10 +63,28 @@ playersClass.prototype = {
 
     colorKeyPressed: function(){
         changeColor(this.colorPos)
+        //key pressed animation
+        this.colorKeySprite.loadTexture('q_yes')
+        this.colorKeySprite.tint = 0x999999;
     },
 
     shapeKeyPressed: function(){
         changeShape(this.shapePos)
+        //key pressed animation
+        this.shapeKeySprite.loadTexture('p_yes')
+        this.shapeKeySprite.tint = 0x999999;
+    },
+
+    colorKeyUp: function(){
+        //key up animation
+        this.colorKeySprite.loadTexture('q_no')
+        this.colorKeySprite.tint = 0xffffff;
+    },
+
+    shapeKeyUp: function(){
+        //key up animation
+        this.shapeKeySprite.loadTexture('p_no')
+        this.shapeKeySprite.tint = 0xffffff;
     },
 
     iniArrows: function(xPos, yPos, angle){
@@ -71,15 +95,24 @@ playersClass.prototype = {
         return arrow
     }, 
 
+    iniKeySprites: function(xPos, yPos, sp){
+        key = game.add.sprite(xPos, yPos, sp)
+        key.pivot = new PIXI.Point(spriteDim/2, spriteDim/2);
+        key.scale.setTo(spritesScaleMult * 0.8, spritesScaleMult * 0.8);
+        return key
+    }, 
+
     ChangeColorArrowPos: function()
     {
         this.colorPos = (this.colorPos + 1) % N
         this.colorArrow.position.x = elementsXPos[this.colorPos]
+        this.colorKeySprite.position.x = this.colorArrow.position.x
     },
 
     ChangeShapeArrowPos: function()
     {
         this.shapePos = (this.shapePos - 1 + N) % N
         this.shapeArrow.position.x = elementsXPos[this.shapePos]
+        this.shapeKeySprite.position.x = this.shapeArrow.position.x
     }
 }
