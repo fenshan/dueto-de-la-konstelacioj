@@ -1,2 +1,2 @@
 # duetodelakonstelacioj
-ggj phaser javascript game
+ggj 2022 phaser javascript game
