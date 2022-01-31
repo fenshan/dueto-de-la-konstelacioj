@@ -9,3 +9,7 @@
 <p align="center"><a href="https://fenshan.itch.io/dueto-de-la-konstelacioj">
   click here to play it on itch.io!
   </a></p>
+
+<p align="center"><a href="https://globalgamejam.org/2022/games/asdf-6">
+  link to the GGJ22 entry
+  </a></p>
