@@ -1,5 +1,5 @@
 var playersClass = function(){
-    this.timeTap = 0.15
+    this.timeTap = 0.35
     this.doubleSpeed
     this.multSpeed = 5
     
@@ -61,6 +61,9 @@ playersClass.prototype = {
             this.timetoChangeShape = this.getRandomTimeToChange()
             //console.log(this.timetoChangeShape)
         }
+
+        //if (this.colorKey.isDown)
+        //    console.log(this.realTimePassed(this.colorPressedTime))
 
         //hold down keys
         if (this.colorKey.isDown && this.shapeKey.isDown 
